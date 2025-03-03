@@ -96,46 +96,48 @@
 
 // export default App;
 
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+const ListPage = () => {
+  return (
+    <div>
+      <h2>List Page</h2>
+      <ul>
+        <li>
+          <Link to="/items/1">Item 1</Link>
+        </li>
+        <li>
+          <Link to="/items/2">Item 2</Link>
+        </li>
+        <li>
+          <Link to="/items/3">Item 3</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
-import React from "react";
-import './../styles/App.css';
-import { BrowserRouter, Link, Route, Routes, useParams } from "react-router-dom";
+const ItemDetailsPage = ({ match }) => {
+  const itemId = match.params.itemId;
+
+  return (
+    <div>
+      <h2>Item Details Page</h2>
+      <p>Item ID: {itemId}</p>
+    </div>
+  );
+};
 
 const App = () => {
   return (
-    <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<List />}/>
-            <Route path="/item/:id" element={<Item />}/>
-          </Routes>
-        </BrowserRouter>
-    </div>
-  )
-}
+    <Router>
+      <div>
+        <Route exact path="/" component={ListPage} />
+        <Route path="/items/:itemId" component={ItemDetailsPage} />
+      </div>
+    </Router>
+  );
+};
 
-export default App
-
-function List(){
-  return (
-    <div>
-      <h1>Item List</h1>
-      <ul>
-        <li><Link to={"/item/1"}>Item 1</Link></li>
-        <li><Link to={"/item/2"}>Item 2</Link></li>
-        <li><Link to={"/item/3"}>Item 3</Link></li>
-      </ul>
-    </div>
-  )
-}
-
-function Item(){
-  const {id} =  useParams()
-  return (
-    <div>
-      <h1>Item {id}</h1>
-      <p>Description for Item {id}</p>
-    </div>
-  )
-}
+export default App;
